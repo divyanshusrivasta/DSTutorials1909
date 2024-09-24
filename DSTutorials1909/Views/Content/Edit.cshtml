@@ -1,0 +1,175 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+
+<div class="container">
+    <div class="row mt-3mb-2">
+        <div class="col-8">
+            <h2 class="text-primary">Edit Content</h2>
+        </div>
+    </div>
+    <form method="post">
+        <input asp-for="@Model.Content.ContentId" hidden />
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.CourseId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select id="ddlcourse" asp-for="@Model.Content.CourseId" asp-items="@(new SelectList(Model.CourseList,"CoursesId","CourseName"))" class="form-select" onchange="ShowMenu()">
+                    <option selected disabled value="">--SELECT COURSE--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.MenuId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select asp-for="@Model.Content.MenuId" id="ddlmenu" onchange="ShowSubMenu()" class="form-select">
+                    <option selected disabled value="">--SELECT MENU--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.SubMenuId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select asp-for="@Model.Content.SubMenuId" id="ddlsubmenu" class="form-select">
+                    <option selected disabled value="">--SELECT SUB MENU--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.ContentDetail" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <textarea id="ContentDetail" name="Content.ContentDetail" class="form-control" rows="5">@Model.Content.ContentDetail</textarea>
+
+            </div>
+        </div>
+
+
+
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Update" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-controller="Content" asp-action="Index" class="btn btn-outline-light form-control">Back To List</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+<script src="https://cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+
+    // CKEDITOR.replace('Content.ContentDetail');
+
+    // CKEDITOR.replace('Content.ContentDetail', {
+    //     extraPlugins: 'justify', // Include the justify plugin
+    //     toolbar: [
+    //         { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+    //         { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll'] },
+    //         { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
+    //         { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+    //         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+    //         { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+    //         { name: 'document', items: ['Source'] }
+    //     ]
+    // });
+
+
+
+    $(document).ready(function () {
+
+        CKEDITOR.replace('Content.ContentDetail', {
+            extraPlugins: 'justify',
+            toolbar: [
+                { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+                { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll'] },
+                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
+                { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                { name: 'document', items: ['Source'] }
+            ]
+        });
+
+
+
+
+        var CourseId = $("#ddlcourse").val();
+        if (CourseId) {
+            ShowMenu();
+
+        }
+
+    });
+
+
+    function ShowMenu() {
+
+
+        $.ajax({
+            url: '/Content/MenuShow',
+            type: 'GET',
+            data: { Mid: $('#ddlcourse').val() },
+            success: function (data) {
+                $("#ddlmenu").empty();
+                $("#ddlmenu").append($('<option selected disabled></option>').html("--SELECT MENU--").val(0));
+                for (var i = 0; i < data.length; i++) {
+                    $("#ddlmenu").append($('<option></option>').html(data[i].menuName).val(data[i].menuId));
+                }
+
+                var selectedMenu = '@Model.Content.MenuId';
+                $('#ddlmenu').val(selectedMenu);
+                ShowSubMenu();
+            },
+            error: function () {
+                alert("Some Error Occured While Fetching the Menus")
+            }
+
+        });
+    }
+
+
+    function ShowSubMenu() {
+
+
+        $.ajax({
+            url: '/Content/SubMenuShow',
+            type: 'GET',
+            data: { Sid: $('#ddlmenu').val() },
+            success: function (data) {
+                $("#ddlsubmenu").empty();
+                $("#ddlsubmenu").append($('<option selected disabled></option>').html("--SELECT SUB MENU--").val(0));
+                for (var i = 0; i < data.length; i++) {
+                    $("#ddlsubmenu").append($('<option></option>').html(data[i].subMenuName).val(data[i].subMenuId));
+                }
+                var selectedMenu = '@Model.Content.SubMenuId';
+                $('#ddlsubmenu').val(selectedMenu);
+            },
+            error: function () {
+                alert("Some Error Occured While Fetching the SubMenus")
+            }
+
+        });
+    }
+
+
+
+</script>
+
+
+
+

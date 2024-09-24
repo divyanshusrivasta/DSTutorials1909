@@ -1,0 +1,147 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+<div class="container">
+    <div class="row mt-3 mb-2">
+        <div class="col-8">
+            <h2 class="text-primary">Create New Content</h2>
+        </div>
+    </div>
+    <form method="post">
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.CourseId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select id="ddlcourse" asp-for="@Model.Content.CourseId" asp-items="@(new SelectList(Model.CourseList, "CoursesId", "CourseName"))" class="form-select" onchange="ShowMenu()">
+                    <option selected disabled value="">--SELECT COURSE--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.MenuId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select asp-for="@Model.Content.MenuId" id="ddlmenu" onchange="ShowSubMenu()" class="form-select">
+                    <option selected disabled value="">--SELECT MENU--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.SubMenuId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select asp-for="@Model.Content.SubMenuId" id="ddlsubmenu" class="form-select">
+                    <option selected disabled value="">--SELECT SUB MENU--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Content.ContentDetail" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <textarea id="myEditor" asp-for="@Model.Content.ContentDetail" class="form-control" rows="5"></textarea>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Create" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-controller="Content" asp-action="Index" class="btn btn-outline-light form-control">Back To List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/dvte6wqz2rb70lqpy5a7ltuo9x1t715t1fujtaak7x0f983i/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: '#myEditor',
+        plugins: 'code codesample  lists link image table',
+        toolbar: 'undo redo | styles | bold italic underline | fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist | link image | insertCodeSample | codesample  ',
+        menubar: false,
+
+        height: 300,
+        setup: function (editor) {
+            editor.ui.registry.addMenuItem('insertCodeSample', {
+                text: 'Insert/Edit Code Sample',
+                onAction: function () {
+                    editor.windowManager.open({
+                        title: 'Insert/Edit Code Sample',
+                        body: {
+                            type: 'panel',
+                            items: [
+                                { type: 'input', name: 'language', label: 'Language (e.g., javascript, python)', placeholder: 'e.g., javascript' },
+                                { type: 'textarea', name: 'code', label: 'Code', placeholder: 'Enter your code here' }
+                            ]
+                        },
+                        buttons: [
+                            {
+                                type: 'cancel',
+                                text: 'Cancel'
+                            },
+                            {
+                                type: 'submit',
+                                text: 'Insert',
+                                primary: true
+                            }
+                        ],
+                        onSubmit: function (api) {
+                            var data = api.getData();
+                            editor.insertContent('<pre><code class="language-' + data.language + '">' + tinymce.util.XHR.encode(data.code) + '</code></pre>');
+                            Prism.highlightAll();
+                            api.close();
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    function ShowMenu() {
+        $.ajax({
+            url: '/Content/MenuShow',
+            type: 'GET',
+            data: { Mid: $('#ddlcourse').val() },
+            success: function (data) {
+                $("#ddlmenu").empty();
+                $("#ddlmenu").append($('<option selected disabled></option>').html("--SELECT MENU--").val(0));
+                for (var i = 0; i < data.length; i++) {
+                    $("#ddlmenu").append($('<option></option>').html(data[i].menuName).val(data[i].menuId));
+                }
+            },
+            error: function () {
+                alert("Some Error Occurred While Fetching the Menus");
+            }
+        });
+    }
+
+    function ShowSubMenu() {
+        $.ajax({
+            url: '/Content/SubMenuShow',
+            type: 'GET',
+            data: { Sid: $('#ddlmenu').val() },
+            success: function (data) {
+                $("#ddlsubmenu").empty();
+                $("#ddlsubmenu").append($('<option selected disabled></option>').html("--SELECT SUB MENU--").val(0));
+                for (var i = 0; i < data.length; i++) {
+                    $("#ddlsubmenu").append($('<option></option>').html(data[i].subMenuName).val(data[i].subMenuId));
+                }
+            },
+            error: function () {
+                alert("Some Error Occurred While Fetching the SubMenus");
+            }
+        });
+    }
+</script>

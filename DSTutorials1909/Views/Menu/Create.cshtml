@@ -1,0 +1,68 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+
+<div class="container">
+    <div class="row mt-3mb-2">
+        <div class="col-8">
+            <h2 class="text-primary">Create New Menu</h2>
+        </div>
+    </div>
+    <form method="post">
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Menu.CourseId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <select id="ddlcourse" asp-for="@Model.Menu.CourseId" asp-items="@(new SelectList(Model.CourseList,"CoursesId","CourseName"))" class="form-select">
+                    <option selected disabled value="">--SELECT COURSE--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Menu.MenuSequence" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <input asp-for="@Model.Menu.MenuSequence" class="form-control " />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Menu.MenuName" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <input asp-for="@Model.Menu.MenuName" class="form-control SideSubMenuName" />
+                <input hidden asp-for="@Model.Menu.MenuName" class="form-control SideSubMenuName" />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Create" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-controller="Menu" asp-action="Index" class="btn btn-outline-light form-control">Back To List</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+
+
+
+ $("#ddlcourse").on('change', function () {
+        var ddlcourse = $(this).find(':selected').text();
+        SetSideSubMenuName(ddlcourse);
+    })
+
+    function SetSideSubMenuName(ddlcourse) {
+        var sideSubMenuName = ddlcourse;
+        $(".SideSubMenuName").val(ddlcourse);
+    }
+
+
+</script>
