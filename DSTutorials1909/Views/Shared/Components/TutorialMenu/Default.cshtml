@@ -1,0 +1,149 @@
+﻿@model IEnumerable<DSTutorials1909.Models.Courses>
+
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customNavbar" aria-controls="customNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="customNavbar">
+        <ul class="navbar-nav">
+            @foreach (var course in Model)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CourseDetails", "Main", new { menuUrl = course.CourseName.ToLower().Replace(" ", "-") })"
+                       style="@(course.CourseName == ViewBag.SelectedCourse ? "font-weight:bold;" : "")">
+                        @course.CourseName
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
+
+<style>
+    .custom-navbar {
+        background-color: blueviolet;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0;
+        margin: 0;
+    }
+
+        .custom-navbar .navbar-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .custom-navbar .nav-link {
+            color: white;
+            padding: 10px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            border-radius: 2px;
+        }
+
+            .custom-navbar .nav-link:hover {
+                background-color: #000;
+            }
+
+        /* Hide scrollbar for WebKit browsers */
+        .custom-navbar::-webkit-scrollbar {
+            display: none;
+        }
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none;
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none;
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<DSTutorials1909.Models.Courses>
+
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customNavbar" aria-controls="customNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="customNavbar">
+        <ul class="navbar-nav">
+            @foreach (var course in Model)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("ContentDetails", "Main", new { courseId = course.CoursesId })">
+                        @course.CourseName
+                    </a>
+
+                        
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
+
+<style>
+    .custom-navbar {
+        background-color:blueviolet;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0;
+        margin: 0;
+    }
+
+        .custom-navbar .navbar-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .custom-navbar .nav-link {
+            color: white;
+            padding: 10px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            border-radius: 2px;
+        }
+
+            .custom-navbar .nav-link:hover {
+                background-color: #000; /* Adjust the hover color as needed */
+            }
+
+        /* Hide scrollbar for WebKit browsers */
+        .custom-navbar::-webkit-scrollbar {
+            display: none;
+        }
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none;
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none;</style>
+ *@

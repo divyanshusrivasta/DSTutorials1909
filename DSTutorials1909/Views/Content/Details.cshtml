@@ -1,0 +1,159 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Content</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.ContentDetail)
+        </dt>
+        <dd class="col-sm-10" style="color:white">
+            @Html.Raw(Model.Content.ContentDetail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.Courses.CourseName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.Courses.CourseName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.Menu.MenuName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.Menu.MenuName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.SubMenu.SubMenuName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.SubMenu.SubMenuName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.SubMenu.SubMenuUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.SubMenu.SubMenuUrl)
+        </dd>
+    </dl>
+</div>
+
+<div class="row mt-2 mb-2">
+    <div class="col-6 col-md-3 mt-3 mb-2">
+        <a asp-action="Edit" asp-route-id="@Model?.Content.ContentId" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-light ms-4">Back to List</a>
+    </div>
+</div>
+
+@* <script>
+    function copyCodeSample() {
+        // Select the code sample from the content detail
+        const codeSample = document.querySelector('.col-sm-10').innerText; // This assumes your code sample is the only text in that column
+        navigator.clipboard.writeText(codeSample).then(() => {
+            alert('Code sample copied to clipboard!');
+        });
+    }
+</script> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*  @model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Content</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.ContentDetail)
+        </dt>
+        <dd class="col-sm-10" style="color:white">
+            @Html.Raw(Model.Content.ContentDetail)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.Courses.CourseName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.Courses.CourseName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.Menu.MenuName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.Menu.MenuName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content.SubMenu.SubMenuName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Content.SubMenu.SubMenuName)
+        </dd>
+
+        <!-- New section for Code Sample -->
+       
+    </dl>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const codeBlock = event.target.previousElementSibling;
+                const code = codeBlock.innerText;
+                navigator.clipboard.writeText(code).then(() => {
+                    alert('Code copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+    });
+</script>
+<div class="row mt-2 mb-2">
+    <div class="col-6 col-md-3 mt-3 mb-2">
+        <a asp-action="Edit" asp-route-id="@Model?.Content.ContentId" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-light ms-4">Back to List</a>
+    </div>
+</div>
+
+<!-- Include Prism.js for syntax highlighting -->
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+
+ *@

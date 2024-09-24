@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DSTutorials1909.Models.SubMenu>
+
+<div class="container">
+    <div class="row mt-2 mb-2">
+        <div class="col-6">
+            <h2 class="text-primary">List Of SubMenus</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="SubMenu" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> Create New Menu</a>
+        </div>
+    </div>
+
+    <div>
+        <table id="tblsubmenu" class="display">
+            <thead>
+                <tr>
+                    <th style="color:white">SubMenu Id</th>
+                    <th style="color:white">SubMenu Name</th>
+                    <th style="color:white">Course Name</th>
+                    <th style="color:white">Menu Name</th>
+                    <th style="color:white">SubMenu Sequence</th>
+                    <th style="color:white">SubMenu URL</th>
+                    <th style="color:white">Edit</th>
+                    <th style="color:white">Delete</th>
+                </tr>
+            </thead>
+            
+        </table>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/SubMenuTable.js"></script>
+}

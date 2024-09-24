@@ -1,0 +1,46 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+
+<div class="container">
+    <div class="row mt-3mb-2">
+        <div class="col-8">
+            <h2 class="text-primary text-danger">Are you sure you want to Delete Menu ?</h2>
+        </div>
+    </div>
+    <form method="post">
+        <input asp-for="@Model.Menu.MenuId" hidden />
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Menu.CourseId" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <input disabled asp-for="@Model.Menu.Courses.CourseName" class="form-control" />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Menu.MenuSequence" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <input disabled asp-for="@Model.Menu.MenuSequence" class="form-control" />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.Menu.MenuName" class="form-label"></label>
+            </div>
+            <div class="col-10">
+                <input disabled asp-for="@Model.Menu.MenuName" class="form-control" />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Delete" class="btn btn-danger form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-controller="Menu" asp-action="Index" class="btn btn-outline-light form-control">Back To List</a>
+            </div>
+        </div>
+
+    </form>
+</div>

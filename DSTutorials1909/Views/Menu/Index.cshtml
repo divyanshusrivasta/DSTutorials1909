@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DSTutorials1909.Models.Menu>
+
+<div class="container">
+    <div class="row mt-2 mb-2">
+        <div class="col-6">
+            <h2 class="text-primary">List Of Menus</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Menu" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> Create New Menu</a>
+        </div>
+    </div>
+
+    <div>
+        <table class="display" id="tblmenu">
+            <thead>
+                <tr>
+                    <th style="background-color:blue;color:white;">Menu Id</th>
+                    <th style="background-color:blue;color:white;">Menu Name</th>
+                    <th style="background-color:blue;color:white;">Course Name</th>
+                    <th style="background-color:blue;color:white;">Menu Sequence</th>
+                    <th style="background-color:blue;color:white;">Edit</th>
+                    <th style="background-color:blue;color:white;">Delete</th>
+                </tr>
+            </thead>
+     
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/js/MenuTable.js"></script>
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,354 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = Model.SubMenu?.SubMenuName;
+}
+
+@if (Model != null)
+{
+    <section id="content" class="d-flex" style="height: calc(100vh - 100px); overflow: hidden; margin: 10px 0; margin-top: 101px;">
+        <!-- Toggle Button -->
+        <button class="sidebar-toggle" onclick="toggleSidebar()" style="position: absolute; left: 2px; top: 100px; background: #1a273b; border: none; cursor: pointer; z-index: 1000; padding: 5px; border-radius: 5px;">
+            <span style="color: white; font-size: 20px;">☰</span> <!-- List Icon -->
+        </button>
+
+
+        <div id="sidebar" style="width: 300px; height: 100%; overflow-y: auto; background-color: #1a273b; padding: 0; margin: 0; transition: width 0.3s;">
+            <nav>
+                <ul class="menu-list">
+                    @if (Model.MenuList != null && Model.MenuList.Any())
+                    {
+                        foreach (var menu in Model.MenuList)
+                        {
+                            <li>
+                                <h4 style="margin-left:10px;color: #FFFFFF;">@menu.MenuName</h4>
+                                @if (Model.SubMenuList != null && Model.SubMenuList.Any())
+                                {
+                                    <ul class="submenu-list">
+                                        @foreach (var submenu in Model.SubMenuList.Where(sm => sm.MenuId == menu.MenuId))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("CourseDetails", "Main", new { menuUrl = Model.Courses.MenuUrl, subMenuUrl = submenu.SubMenuUrl })"
+                                                   class="@(Model.SubMenu?.SubMenuId == submenu.SubMenuId ? "highlighted-submenu" : "")"
+                                                   style="text-decoration: none; color: #FFFFFF;">
+                                                    @submenu.SubMenuName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+
+        <div id="content-area" style="width: calc(100vw - 300px); height: 100%; overflow-y: auto; padding: 10px; margin: 0; background-color:#0b182b;">
+            <div class="select-tutorial p-3">
+                
+
+                <div class="content-area">
+                    
+                    @if (Model.ContentList != null && Model.ContentList.Any())
+                    {
+
+                        foreach (var content in Model.ContentList)
+                        {
+                            <dl class="row">
+                                <dd class="col-sm-12 col-md-10 col-8" style="color:white">
+                                    <h2 style="color:white;">@Model.SubMenu?.SubMenuName</h2>
+                                    @Html.Raw(content.ContentDetail)
+                                </dd>
+                            </dl>
+                        }
+                    }
+                    
+                    else
+                    {
+                        <div class="under-maintenance d-flex justify-content-center align-items-center flex-column" style="height: 100%; padding: 1px;">
+                            <p style="text-align: center;">This website is under development and listed features will not be available ★ Stay tuned for more updates and features as we ramp up to launch very soon.</p>
+                        </div>
+                    }
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    Html.ActionLink("Go to Error Page", "ErrorPage", "Home");
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #4B0082;
+        color: #FFFFFF;
+    }
+
+    .justify-content-center {
+        justify-content: center !important;
+    }
+    .under-maintenance {
+        text-align: center;
+        padding: 0 1rem;
+    }
+    .sidebar-toggle {
+        display: none; /* Initially hidden */
+    }
+
+    .menu-list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .submenu-list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        padding-left: 15px;
+    }
+
+        .submenu-list li {
+            margin: 5px 0;
+        }
+
+        .submenu-list a {
+            display: block;
+            padding: 5px 10px;
+            color: #FFFFFF;
+            background-color: #1a273b;
+        }
+
+    .highlighted-submenu {
+        background-color: darkviolet !important;
+    }
+
+    .submenu-list a:hover {
+        background-color: blue;
+    }
+
+    /* Custom Scrollbar Styles */
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #2C2C2C;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #8A2BE2;
+        border-radius: 10px;
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6A1B9A;
+        }
+</style>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const contentArea = document.getElementById('content-area');
+
+        if (sidebar.style.width === '300px') {
+            sidebar.style.width = '0'; // Collapse sidebar
+            contentArea.style.width = '100vw'; // Expand content area
+        } else {
+            sidebar.style.width = '300px'; // Expand sidebar
+            contentArea.style.width = 'calc(100vw - 300px)'; // Adjust content area
+        }
+    }
+
+    // Automatic collapse on small screens
+    window.addEventListener('resize', function () {
+        if (window.innerWidth < 768) {
+            document.getElementById('sidebar').style.width = '0'; // Collapse sidebar
+            document.getElementById('content-area').style.width = '100vw'; // Expand content area
+            document.querySelector('.sidebar-toggle').style.display = 'block'; // Show toggle button
+        } else {
+            document.getElementById('sidebar').style.width = '300px'; // Reset sidebar
+            document.getElementById('content-area').style.width = 'calc(100vw - 300px)'; // Reset content area
+            document.querySelector('.sidebar-toggle').style.display = 'none'; // Hide toggle button
+        }
+    });
+
+    // Trigger resize event to set initial state
+    window.dispatchEvent(new Event('resize'));
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh; text-align: center;">
+    <p>This website is under development and listed features will not be available ★ Stay tuned for more updates and features as we ramp up to launch very soon.</p>
+</div> *@
+
+
+
+@* 
+
+@model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = Model.SubMenu?.SubMenuName;
+}
+
+@if (Model != null)
+{
+    <section id="content" class="d-flex" style="height: calc(100vh - 100px); overflow: hidden; margin: 10px 0; margin-top: 101px;">
+        <div style="width: 300px; height: 100%; overflow-y: auto; background-color: dimgray; padding: 0; margin: 0;">
+            <nav>
+                <ul class="menu-list">
+                    @if (Model.MenuList != null && Model.MenuList.Any())
+                    {
+                        foreach (var menu in Model.MenuList)
+                        {
+                            <li>
+                                <h4 style="color: #FFFFFF;">@menu.MenuName</h4>
+                                @if (Model.SubMenuList != null && Model.SubMenuList.Any())
+                                {
+                                    <ul class="submenu-list">
+                                        @foreach (var submenu in Model.SubMenuList.Where(sm => sm.MenuId == menu.MenuId))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("CourseDetails", "Main", new { menuUrl = Model.Courses.MenuUrl, subMenuUrl = submenu.SubMenuUrl })"
+                                                   class="@(Model.SubMenu?.SubMenuId == submenu.SubMenuId ? "highlighted-submenu" : "")"
+                                                   style="text-decoration: none; color: #FFFFFF;">
+                                                    @submenu.SubMenuName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+
+        <div style="width: calc(100vw - 300px); height: 100%; overflow-y: auto; padding: 10px; margin: 0; background-color: indigo;">
+            <div class="select-tutorial p-3">
+                <h2 style="color:white;">@Model.SubMenu?.SubMenuName</h2>
+
+             
+
+                <div class="content-area">
+                    @if (Model.ContentList != null && Model.ContentList.Any())
+                    {
+                        foreach (var content in Model.ContentList)
+                        {
+                            @Html.Raw(content.ContentDetail)
+                        }
+                    }
+                    else
+                    {
+                        <p style="color: white;">No content available for this submenu.</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    Html.ActionLink("Go to Error Page", "ErrorPage", "Home");
+}
+
+<style>
+    body {
+        margin: 0; /* Remove default body margin */
+        padding: 0; /* Remove default body padding */
+        overflow: hidden; /* Prevent body from scrolling */
+        background-color: #4B0082; /* Dark Violet Background */
+        color: #FFFFFF; /* Default font color */
+    }
+
+    .menu-list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .submenu-list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        padding-left: 15px; /* Indent submenu */
+    }
+
+        .submenu-list li {
+            margin: 5px 0;
+        }
+
+    .highlighted-submenu {
+        background-color: darkviolet; /* Permanent background color for selected submenu */
+    }
+
+    .submenu-list a {
+        display: block; /* Make the link cover the entire list item */
+        padding: 5px 10px; /* Add some padding for better click area */
+        color: #FFFFFF; /* White text color */
+    }
+
+        .submenu-list a:hover {
+            background-color: blue; /* Background color on hover */
+        }
+</style>
+
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

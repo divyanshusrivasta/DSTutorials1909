@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DSTutorials1909.Models.Content>
+
+<div class="container">
+    <div class="row mt-2 mb-2">
+        <div class="col-6">
+            <h2 class="text-primary">List Of Contents</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Content" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> Add New Content</a>
+        </div>
+    </div>
+
+    <div>
+        <table id="tblcontent" class="display">
+            <thead>
+                <tr>
+                    <th style="color:white">Content Id</th>
+                    <th style="color:white">Course Name</th>
+                    <th style="color:white">Side Menu Name</th>
+                    <th style="color:white">Side Sub Menu Name</th>
+@*                     <th style="color:white">Side Sub Menu Url</th>
+ *@                    <th style="color:white">Details</th>
+                    <th style="color:white">Edit</th>
+                    <th style="color:white">Delete</th>
+                </tr>
+            </thead>
+           @*  <tbody>
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td>@i.ContentId</td>
+                        <td>@i.Courses.CourseName</td>
+                        <td>@i.Menu.MenuName</td>
+                        <td> @i.SubMenu.SubMenuName </td>
+                        <td>
+                            <a asp-controller="Content" asp-action="Details" asp-route-id="@i.ContentId" class="btn btn-primary">Details</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Content" asp-action="Edit" asp-route-id="@i.ContentId" class="btn btn-secondary">Edit</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Content" asp-action="Delete" asp-route-id="@i.ContentId" class="btn btn-danger">Delete</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody> *@
+        </table>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/ContentTable.js"></script>
+}

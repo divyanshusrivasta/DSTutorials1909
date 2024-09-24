@@ -1,0 +1,12 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+<div class="navigation-buttons" style="text-align: center; margin: 20px 0;">
+    @if (Model.PreviousSubMenu != null)
+    {
+        <a href="@Url.Action("CourseDetails", "Main", new { menuUrl = Model.Courses.MenuUrl, subMenuUrl = Model.PreviousSubMenu.SubMenuUrl })" class="btn btn-primary">Previous</a>
+    }
+    @if (Model.NextSubMenu != null)
+    {
+        <a href="@Url.Action("CourseDetails", "Main", new { menuUrl = Model.Courses.MenuUrl, subMenuUrl = Model.NextSubMenu.SubMenuUrl })" class="btn btn-primary">Next</a>
+    }
+</div>
