@@ -14,10 +14,14 @@ namespace DSTutorials1909.ViewModel
         public IEnumerable<SubMenu> SubMenuList { get; set; }
         public Content Content { get; set; }
         public IEnumerable<Content> ContentList { get; set; }
+<<<<<<< HEAD
         public SubMenu PreviousSubMenu { get; set; }
         public SubMenu NextSubMenu { get; set; }
         public string? PrevUrl { get; set; }
         public string? NextUrl { get; set; }
+=======
+
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
     }
 }

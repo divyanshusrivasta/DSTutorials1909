@@ -20,11 +20,14 @@ namespace DSTutorials1909.Controllers
             return View(data);
         }
 
+<<<<<<< HEAD
         [HttpGet]
         public string SideSubMenuUrl(int sideSubMenuId)
         {
             return _db.SubMenus.FirstOrDefault(i=>i.SubMenuId==sideSubMenuId).SubMenuUrl;
         }
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
 
         public IActionResult MenuShow(int Mid)

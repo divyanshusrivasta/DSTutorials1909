@@ -1,8 +1,12 @@
 using DSTutorials1909.Data;
 using DSTutorials1909.Models;
+<<<<<<< HEAD
 using DSTutorials1909.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+=======
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 using System.Diagnostics;
 
 namespace DSTutorials1909.Controllers
@@ -26,9 +30,12 @@ namespace DSTutorials1909.Controllers
             return View(course);
         }
 
+<<<<<<< HEAD
 
         
 
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         public IActionResult Privacy()
         {
             return View();

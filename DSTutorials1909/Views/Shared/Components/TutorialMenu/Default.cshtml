@@ -10,8 +10,12 @@
             @foreach (var course in Model)
             {
                 <li class="nav-item">
+<<<<<<< HEAD
                     <a class="nav-link" href="@Url.Action("CourseDetails", "Main", new { menuUrl = course.CourseName.ToLower().Replace(" ", "-") })"
                        style="@(course.CourseName == ViewBag.SelectedCourse ? "font-weight:bold;" : "")">
+=======
+                    <a class="nav-link" href="#">
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                         @course.CourseName
                     </a>
                 </li>
@@ -22,6 +26,7 @@
 
 <style>
     .custom-navbar {
+<<<<<<< HEAD
         background-color: blueviolet;
         white-space: nowrap;
         overflow-x: auto;
@@ -107,6 +112,8 @@
 
 <style>
     .custom-navbar {
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         background-color:blueviolet;
         white-space: nowrap;
         overflow-x: auto;
@@ -146,4 +153,7 @@
     -ms-overflow-style: none;
     /* Hide scrollbar for Firefox */
     scrollbar-width: none;</style>
+<<<<<<< HEAD
  *@
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6

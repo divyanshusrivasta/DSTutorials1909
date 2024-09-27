@@ -13,8 +13,11 @@ function showTable() {
             { data: 'courses.courseName' },
             { data: 'menu.menuName' },
             { data: 'subMenu.subMenuName' },
+<<<<<<< HEAD
             //{ data: 'sideSubMenuUrl' },
 
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
             {
                 "data": null,

@@ -15,6 +15,10 @@
         </dt>
         <dd class="col-sm-10" style="color:white">
             @Html.Raw(Model.Content.ContentDetail)
+<<<<<<< HEAD
+=======
+            <button onclick="copyCodeSample()" style="margin-left: 10px; background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Copy Code Sample</button>
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Content.Courses.CourseName)
@@ -34,12 +38,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Content.SubMenu.SubMenuName)
         </dd>
+<<<<<<< HEAD
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Content.SubMenu.SubMenuUrl)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Content.SubMenu.SubMenuUrl)
         </dd>
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
     </dl>
 </div>
 
@@ -50,7 +57,11 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 @* <script>
+=======
+<script>
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
     function copyCodeSample() {
         // Select the code sample from the content detail
         const codeSample = document.querySelector('.col-sm-10').innerText; // This assumes your code sample is the only text in that column
@@ -58,7 +69,11 @@
             alert('Code sample copied to clipboard!');
         });
     }
+<<<<<<< HEAD
 </script> *@
+=======
+</script>
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
 
 

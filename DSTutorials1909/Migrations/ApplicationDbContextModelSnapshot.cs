@@ -39,10 +39,13 @@ namespace DSTutorials1909.Migrations
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
                     b.Property<string>("SideSubMenuUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                     b.Property<int>("SubMenuId")
                         .HasColumnType("int");
 
@@ -80,9 +83,12 @@ namespace DSTutorials1909.Migrations
                     b.Property<int>("CourseSequence")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
                     b.Property<string>("MenuUrl")
                         .HasColumnType("nvarchar(max)");
 
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                     b.HasKey("CoursesId");
 
                     b.ToTable("Courses");

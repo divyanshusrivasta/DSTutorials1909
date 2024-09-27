@@ -34,7 +34,11 @@
                 <label asp-for="@Model.Content.SubMenuId" class="form-label"></label>
             </div>
             <div class="col-10">
+<<<<<<< HEAD
                 <select asp-for="@Model.Content.SubMenuId" id="ddlsubmenu" class="ddlsubmenu form-select">
+=======
+                <select asp-for="@Model.Content.SubMenuId" id="ddlsubmenu" class="form-select">
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                     <option selected disabled value="">--SELECT SUB MENU--</option>
                 </select>
             </div>
@@ -42,6 +46,7 @@
 
         <div class="row mt-2 mb-2">
             <div class="col-2">
+<<<<<<< HEAD
                 <label asp-for="@Model.Content.SideSubMenuUrl" class="form-label"></label>
             </div>
             <div class="col-10">
@@ -52,6 +57,8 @@
 
         <div class="row mt-2 mb-2">
             <div class="col-2">
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                 <label asp-for="@Model.Content.ContentDetail" class="form-label"></label>
             </div>
             <div class="col-10">
@@ -76,6 +83,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
+<<<<<<< HEAD
 
     function SetSideSubMenuUrl(ddlsubmenu) {
         $.ajax({
@@ -106,12 +114,15 @@
 
 
 
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
     tinymce.init({
         selector: '#myEditor',
         plugins: 'code codesample  lists link image table',
         toolbar: 'undo redo | styles | bold italic underline | fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist | link image | insertCodeSample | codesample  ',
         menubar: false,
 
+<<<<<<< HEAD
 
         codesample_languages: [
             { text: 'HTML/XML', value: 'markup' },
@@ -133,6 +144,8 @@
 
 
 
+=======
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         height: 300,
         setup: function (editor) {
             editor.ui.registry.addMenuItem('insertCodeSample', {

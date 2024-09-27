@@ -1,13 +1,18 @@
 ﻿using DSTutorials1909.Data;
+<<<<<<< HEAD
 using DSTutorials1909.Models;
 using DSTutorials1909.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+=======
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
 namespace DSTutorials1909.Controllers
 {
     public class MainController : Controller
     {
+<<<<<<< HEAD
         private readonly ApplicationDbContext _context;
 
         public MainController(ApplicationDbContext context)
@@ -97,5 +102,17 @@ namespace DSTutorials1909.Controllers
 
        
 
+=======
+        private readonly ApplicationDbContext _db;
+        public MainController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+        public IActionResult Index()
+        {
+
+            return View();
+        }
+>>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
     }
 }
