@@ -18,24 +18,19 @@
                     <th style="color:white">Course Name</th>
                     <th style="color:white">Side Menu Name</th>
                     <th style="color:white">Side Sub Menu Name</th>
-<<<<<<< HEAD
-@*                     <th style="color:white">Side Sub Menu Url</th>
- *@                    <th style="color:white">Details</th>
-=======
                     <th style="color:white">Details</th>
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                     <th style="color:white">Edit</th>
                     <th style="color:white">Delete</th>
                 </tr>
             </thead>
-           @*  <tbody>
+            <tbody>
                 @foreach (var i in Model)
                 {
                     <tr>
                         <td>@i.ContentId</td>
                         <td>@i.Courses.CourseName</td>
                         <td>@i.Menu.MenuName</td>
-                        <td> @i.SubMenu.SubMenuName </td>
+                        <td>@i.SubMenu.SubMenuName</td>
                         <td>
                             <a asp-controller="Content" asp-action="Details" asp-route-id="@i.ContentId" class="btn btn-primary">Details</a>
                         </td>
@@ -45,20 +40,12 @@
                         <td>
                             <a asp-controller="Content" asp-action="Delete" asp-route-id="@i.ContentId" class="btn btn-danger">Delete</a>
                         </td>
-
                     </tr>
                 }
-            </tbody> *@
+            </tbody>
         </table>
     </div>
-
 </div>
-
-
-
-
-
-
 
 @section Scripts {
     <script src="~/js/ContentTable.js"></script>

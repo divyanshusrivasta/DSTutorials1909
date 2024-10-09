@@ -1,0 +1,57 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Manage your account";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4 text-primary">Manage your account</h1>
+    <h4 style="color:white">Change your account settings</h4>
+
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group" style="color:white">
+                <li class="list-group-item active" style=" color:white;background-color:#a746eb; border:none;">
+                    Profile
+                </li>
+                
+                <li class ="list-group-item" style=" color:white; border:none;">
+                    <a style="color:white" asp-page="./ChangePassword">Password</a>
+                </li>
+               
+                <li class="list-group-item" style=" color:white; border:none;">
+                    <a style ="color:white" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+                </li>
+                <li class ="list-group-item" style=" color:white; border:none;">
+                    <a style="color:white" asp-page="./PersonalData">Personal data</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card p-4">
+                <h4 style="color:white">Profile</h4>
+                <form id="profile-form" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Username" class="form-control" placeholder="Username" disabled />
+                        <label asp-for="Username" class="form-label"></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
+                        <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <button id="update-profile-button" type="submit" class="w-100 btn btn-lg text-center col-6 col-md-3" style="background-color:#a746eb; color: white;">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

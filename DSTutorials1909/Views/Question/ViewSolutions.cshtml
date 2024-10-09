@@ -1,0 +1,249 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = "User Solutions";
+}
+
+<div class="div">
+    <div class="row mt-3 mb-5">
+        <div class="col-6">
+            <h2 class="text-primary">Answers</h2>
+        </div>
+    </div>
+
+    <table id="tblSolutions" class="table table-bordered table-striped me-4 ms-2 mt-5">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Created Date</th>
+                <th class="text-end"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- DataTable will populate this section via AJAX -->
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblSolutions').DataTable({
+                "ajax": { url: "/Question/GetAllSolutions" },  // Adjust the route if necessary
+                "columns": [
+                    {
+                        "data": "questionTitle", // Property for the question's title
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.questionId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    },
+                    {
+                        "data": "createdDate", // Property for the creation date
+                        "render": function (data) {
+                            return new Date(data).toLocaleString(); // Format date if needed
+                        }
+                    },
+                    {
+                        "data": null,
+                        "className": "text-end",
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/EditSolution?sid=' + row.sId + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>' +
+                                '<a href="/Question/DeleteSolution?sid=' + row.sId + '" class="btn btn-danger ms-1"><i class="bi bi-trash3"></i></a>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
+<style>
+    /* Ensure links are white by default and blue on hover */
+    .custom-inline-link {
+        text-decoration: none;
+        color: white; /* Default white color */
+    }
+
+        .custom-inline-link:hover {
+            color: blue !important; /* Change to blue on hover */
+            text-decoration: none; /* No underline on hover */
+        }
+
+    /* Optional: Style for the link in the button to avoid conflict */
+    a.btn {
+        text-decoration: none;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = "User Solutions";
+}
+
+<div class="div">
+    <div class="row mt-3 mb-3">
+        <div class="col-6">
+            <h2 class="text-primary">Answers</h2>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped me-4 ms-2">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Created Date</th>
+                <th class="text-end"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.SolutionsList != null && Model.SolutionsList.Count > 0)
+            {
+                foreach (var solution in Model.SolutionsList)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Question" asp-action="Details" asp-route-qid="@solution.QId" style="text-decoration: none; color: white;" class="custom-inline-link">
+                                @solution.Question.QName
+                            </a>
+                        </td>
+                        <td>@solution.CreatedDate?.ToString("g")</td>
+                        <td class="text-end">
+                            <a asp-action="EditSolution" asp-route-sid="@solution.SId" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                            <a asp-action="DeleteSolution" asp-route-sid="@solution.SId" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" align="center">No solutions found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* Ensure links are white by default and blue on hover */
+    .custom-inline-link {
+        text-decoration: none;
+        color: white; /* Default white color */
+    }
+
+        .custom-inline-link:hover {
+            color: blue !important; /* Change to blue on hover */
+            text-decoration: none; /* No underline on hover */
+        }
+
+    /* Optional: Style for the link in the button to avoid conflict */
+    a.btn {
+        text-decoration: none;
+    }
+</style>
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model DSTutorials1909.ViewModel.CourseViewModel
+@{
+    ViewData["Title"] = "Solutions ";
+}
+
+<h2>Answers </h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Created Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.SolutionsList !=null && Model.SolutionsList.Count >0)
+        {
+            foreach (var solution in Model.SolutionsList)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Question" asp-action="Details" asp-route-qid="@solution.QId">
+                            @solution.Question.QName
+                        </a>
+                    </td>
+                    <td>@solution.CreatedDate?.ToString("g")</td>
+                    <td>
+                        <a asp-action="EditSolution" asp-route-sid="@solution.SId" class="btn btn-success">Edit</a>
+
+                        <a asp-action="DeleteSolution" asp-route-sid="@solution.SId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" align="center">No matching records found</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+ *@

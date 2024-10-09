@@ -1,0 +1,43 @@
+﻿@model DSTutorials1909.Models.Solution
+@{
+    ViewData["Title"] = "Delete Solution";
+}
+
+<div class="container">
+    <div class="row mt-2 mb-3">
+        <div class="col-7">
+            <h3 class="text-danger">Are you Sure You Want to Delete This Solution?</h3>
+        </div>
+    </div>
+
+    <form asp-action="DeleteSolution" method="post">
+        <input type="hidden" asp-for="SId" />
+        <input type="hidden" asp-for="QId" />
+
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label class="form-label">Solution:</label>
+            </div>
+            <div class="col-10">
+                <input disabled asp-for="SName" class="form-control" />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label class="form-label">Created Date:</label>
+            </div>
+            <div class="col-10">
+                <input disabled value="@Model.CreatedDate?.ToString("g")" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Delete" class="btn btn-danger form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-action="ViewSolutions" asp-route-qid="@Model.QId" class="btn btn-outline-light form-control">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,212 @@
+﻿@model DSTutorials1909.Models.Question
+
+<div class="container">
+    <div class="row mt-2 mb-3">
+        <div class="col-6">
+            <h3 class="text-primary">Add Question</h3>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Question" asp-action="TipsQuestion" class="btn btn-success">Tips for How to write a Good Question!</a>
+        </div>
+    </div>
+
+    <form method="post" asp-action="Create" asp-controller="Question" novalidate="novalidate">
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="QName" class="form-label" style="color:white"></label>
+            </div>
+            <div class="col-10">
+                <input asp-for="QName" class="form-control" />
+                <span asp-validation-for="QName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="QDescription" class="form-label" style="color:white"></label>
+            </div>
+            <div class="col-10">
+                <textarea id="myEditor" asp-for="QDescription" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="QDescription" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Add" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-controller="Question" asp-action="Index" class="btn btn-outline-light form-control">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Include the scripts for jQuery and validation -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/dvte6wqz2rb70lqpy5a7ltuo9x1t715t1fujtaak7x0f983i/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: '#myEditor',
+        plugins: 'code codesample lists link image table',
+        toolbar: 'undo redo | styles | bold italic underline | fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist | link image | insertCodeSample | codesample',
+        menubar: false,
+        height: 300,
+        setup: function (editor) {
+            editor.ui.registry.addMenuItem('insertCodeSample', {
+                text: 'Insert/Edit Code Sample',
+                onAction: function () {
+                    editor.windowManager.open({
+                        title: 'Insert/Edit Code Sample',
+                        body: {
+                            type: 'panel',
+                            items: [
+                                { type: 'input', name: 'language', label: 'Language (e.g., javascript, python)', placeholder: 'e.g., javascript' },
+                                { type: 'textarea', name: 'code', label: 'Code', placeholder: 'Enter your code here' }
+                            ]
+                        },
+                        buttons: [
+                            {
+                                type: 'cancel',
+                                text: 'Cancel'
+                            },
+                            {
+                                type: 'submit',
+                                text: 'Insert',
+                                primary: true
+                            }
+                        ],
+                        onSubmit: function (api) {
+                            var data = api.getData();
+                            editor.insertContent('<pre><code class="language-' + data.language + '">' + tinymce.util.XHR.encode(data.code) + '</code></pre>');
+                            Prism.highlightAll();
+                            api.close();
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model DSTutorials1909.Models.Question
+
+
+<div class="container">
+    <div class="row mt-2 mb-3">
+        <div class="col-6">
+            <h3 class="text-primary">Add Question</h3>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Question" asp-action="TipsQuestion" class="btn btn-success">Tips for How to write a Good Question !</a>
+        </div>
+    </div>
+
+    <form method="post">
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="QName" class="form-label" style="color:white"></label>
+            </div>
+            <div class="col-10">
+                <input asp-for="QName" class="form-control" />
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-2">
+                <label asp-for="@Model.QDescription" class="form-label" style="color:white"></label>
+            </div>
+            <div class="col-10">
+                <textarea id="myEditor" asp-for="@Model.QDescription" class="form-control" rows="5"></textarea>
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <input type="submit" value="Add" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-6 col-md-3 mt-3 mb-2">
+                <a asp-controller="Question" asp-action="Index" class="btn btn-outline-light form-control">Cancle</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/dvte6wqz2rb70lqpy5a7ltuo9x1t715t1fujtaak7x0f983i/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: '#myEditor',
+        plugins: 'code codesample lists link image table',
+        toolbar: 'undo redo | styles | bold italic underline | fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist | link image | insertCodeSample | codesample',
+        menubar: false,
+        height: 300,
+        setup: function (editor) {
+            editor.ui.registry.addMenuItem('insertCodeSample', {
+                text: 'Insert/Edit Code Sample',
+                onAction: function () {
+                    editor.windowManager.open({
+                        title: 'Insert/Edit Code Sample',
+                        body: {
+                            type: 'panel',
+                            items: [
+                                { type: 'input', name: 'language', label: 'Language (e.g., javascript, python)', placeholder: 'e.g., javascript' },
+                                { type: 'textarea', name: 'code', label: 'Code', placeholder: 'Enter your code here' }
+                            ]
+                        },
+                        buttons: [
+                            {
+                                type: 'cancel',
+                                text: 'Cancel'
+                            },
+                            {
+                                type: 'submit',
+                                text: 'Insert',
+                                primary: true
+                            }
+                        ],
+                        onSubmit: function (api) {
+                            var data = api.getData();
+                            editor.insertContent('<pre><code class="language-' + data.language + '">' + tinymce.util.XHR.encode(data.code) + '</code></pre>');
+                            Prism.highlightAll();
+                            api.close();
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+</script> *@

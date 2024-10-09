@@ -1,0 +1,150 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+@{
+    ViewData["Title"] = "User Solutions";
+}
+
+<div class="div">
+    <div class="row mt-3 mb-2">
+        <div class="col-6">
+            <h1 class="text-primary">Ask Your Question</h1>
+        </div>
+    </div>
+
+
+
+
+    <div class="row mt-2 mb-3">
+        <div class="col-3">
+            <a href="#" class="btn btn-primary" id="askButton">
+                <i class="bi bi-plus-circle"></i> Ask
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="loginToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Please Log In</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                You need to be Logged in to ask a question.
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    @* <div class="row mt-2 mb-3">
+        <div class="col-3">
+            <a asp-controller="Question" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Ask
+            </a>
+        </div>
+    </div> *@
+    <div class="mt-4 mb-4">
+        <h3 class="text-primary">Solved questions list</h3>
+    </div>
+
+
+
+    <table id="tblSolutions" class="table table-bordered table-striped me-4 ms-2 mt-5">
+        <thead>
+            <tr>
+                <th>Question</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <!-- DataTable will populate this section via AJAX -->
+        </tbody>
+    </table>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+
+    <!-- Toast Notification Script -->
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable for Solutions Table
+            $('#tblSolutions').DataTable({
+                "ajax": { url: "/Home/GetAllSolutions" },  // Adjust the route if necessary
+                "columns": [
+                    {
+                        "data": "questionTitle", // Property for the question's title
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.questionId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    }
+                ]
+            });
+
+            // Check if user is logged in for the Ask button
+            var isAuthenticated = '@User.Identity.IsAuthenticated' === 'True';
+
+            $('#askButton').click(function (e) {
+                if (!isAuthenticated) {
+                    e.preventDefault();  // Prevent default action
+
+                    // Show toast notification
+                    var toastElement = $('#loginToast');
+                    var toast = new bootstrap.Toast(toastElement);
+                    toast.show();
+                } else {
+                    // Redirect to the ask question page
+                    window.location.href = "/Question/Create";
+                }
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+@* 
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblSolutions').DataTable({
+                "ajax": { url: "/Home/GetAllSolutions" },  // Adjust the route if necessary
+                "columns": [
+                    {
+                        "data": "questionTitle", // Property for the question's title
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.questionId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    }
+                    
+                ]
+            });
+        });
+    </script>
+} *@
+
+<style>
+    /* Ensure links are white by default and blue on hover */
+    .custom-inline-link {
+        text-decoration: none;
+        color: white; /* Default white color */
+    }
+
+        .custom-inline-link:hover {
+            color: blue !important; /* Change to blue on hover */
+            text-decoration: none; /* No underline on hover */
+        }
+
+    /* Optional: Style for the link in the button to avoid conflict */
+    a.btn {
+        text-decoration: none;
+    }
+</style>

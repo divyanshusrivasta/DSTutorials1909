@@ -1,18 +1,13 @@
 ﻿using DSTutorials1909.Data;
-<<<<<<< HEAD
 using DSTutorials1909.Models;
 using DSTutorials1909.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-=======
-using Microsoft.AspNetCore.Mvc;
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
 namespace DSTutorials1909.Controllers
 {
     public class MainController : Controller
     {
-<<<<<<< HEAD
         private readonly ApplicationDbContext _context;
 
         public MainController(ApplicationDbContext context)
@@ -21,32 +16,27 @@ namespace DSTutorials1909.Controllers
         }
 
 
+
         public IActionResult CourseDetails(string menuUrl, string subMenuUrl)
         {
             var viewModel = new CourseViewModel();
 
             // Fetch the selected course by menuUrl
             var selectedCourse = _context.Courses.FirstOrDefault(c => c.MenuUrl == menuUrl);
-
             if (selectedCourse == null)
             {
-                return NotFound("Course not found"); // Handle case where the course does not exist
+                return NotFound("Course not found");
             }
 
             viewModel.Courses = selectedCourse;
-
-            // Set the selected course name for highlighting in the navbar
-            ViewBag.SelectedCourse = selectedCourse.CourseName;
 
             // Fetch all menus for the selected course
             viewModel.MenuList = _context.Menus
                                          .Where(m => m.CourseId == selectedCourse.CoursesId)
                                          .OrderBy(m => m.MenuSequence)
                                          .ToList();
-
             if (!viewModel.MenuList.Any())
             {
-                // If no menus are found, return with a view or message
                 return NotFound("No menus found for this course");
             }
 
@@ -56,10 +46,9 @@ namespace DSTutorials1909.Controllers
                                             .OrderBy(sm => sm.SubMenuSequence)
                                             .ToList();
 
-            // Ensure submenu list is not null or empty
             if (!viewModel.SubMenuList.Any())
             {
-                viewModel.SubMenuList = new List<SubMenu>(); // Avoid null errors later in view
+                viewModel.SubMenuList = new List<SubMenu>();
             }
 
             // Check if a submenu is selected using subMenuUrl
@@ -90,6 +79,19 @@ namespace DSTutorials1909.Controllers
                 }
             }
 
+            // Set Previous and Next URLs
+            var subMenus = viewModel.SubMenuList.ToList();
+            int currentIndex = subMenus.FindIndex(sm => sm.SubMenuId == viewModel.SubMenu?.SubMenuId);
+
+            if (currentIndex > 0)
+            {
+                viewModel.PrevUrl = subMenus[currentIndex - 1].SubMenuUrl; // Get previous submenu URL
+            }
+            if (currentIndex < subMenus.Count - 1)
+            {
+                viewModel.NextUrl = subMenus[currentIndex + 1].SubMenuUrl; // Get next submenu URL
+            }
+
             return View("CourseDetails", viewModel);
         }
 
@@ -100,19 +102,84 @@ namespace DSTutorials1909.Controllers
 
 
 
-       
 
-=======
-        private readonly ApplicationDbContext _db;
-        public MainController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
+
+
+
+
+        //public IActionResult CourseDetails(string menuUrl, string subMenuUrl)
+        //{
+        //    var viewModel = new CourseViewModel();
+
+        //    // Fetch the selected course by menuUrl
+        //    var selectedCourse = _context.Courses.FirstOrDefault(c => c.MenuUrl == menuUrl);
+
+        //    if (selectedCourse == null)
+        //    {
+        //        return NotFound("Course not found");
+        //    }
+
+        //    viewModel.Courses = selectedCourse;
+
+        //    // Set the selected course name for highlighting in the navbar
+        //    ViewBag.SelectedCourse = selectedCourse.CourseName;
+
+        //    // Fetch all menus for the selected course
+        //    viewModel.MenuList = _context.Menus
+        //                                 .Where(m => m.CourseId == selectedCourse.CoursesId)
+        //                                 .OrderBy(m => m.MenuSequence)
+        //                                 .ToList();
+
+        //    if (!viewModel.MenuList.Any())
+        //    {
+        //        return NotFound("No menus found for this course");
+        //    }
+
+        //    // Fetch all submenus for the selected course
+        //    viewModel.SubMenuList = _context.SubMenus
+        //                                    .Where(sm => sm.CourseId == selectedCourse.CoursesId)
+        //                                    .OrderBy(sm => sm.SubMenuSequence)
+        //                                    .ToList();
+
+        //    if (!viewModel.SubMenuList.Any())
+        //    {
+        //        viewModel.SubMenuList = new List<SubMenu>();
+        //    }
+
+        //    // Check if a submenu is selected using subMenuUrl
+        //    if (!string.IsNullOrEmpty(subMenuUrl))
+        //    {
+        //        // Find the selected submenu by its URL
+        //        viewModel.SubMenu = _context.SubMenus
+        //                                    .FirstOrDefault(sm => sm.SubMenuUrl == subMenuUrl && sm.CourseId == selectedCourse.CoursesId);
+
+        //        if (viewModel.SubMenu != null)
+        //        {
+        //            // Fetch the content for the selected submenu
+        //            viewModel.ContentList = _context.Contents
+        //                                            .Where(c => c.SubMenuId == viewModel.SubMenu.SubMenuId)
+        //                                            .ToList();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // If no submenu is selected, select the first submenu by default
+        //        var firstSubMenu = viewModel.SubMenuList.FirstOrDefault();
+        //        if (firstSubMenu != null)
+        //        {
+        //            viewModel.SubMenu = firstSubMenu;
+        //            viewModel.ContentList = _context.Contents
+        //                                            .Where(c => c.SubMenuId == firstSubMenu.SubMenuId)
+        //                                            .ToList();
+        //        }
+        //    }
+
+        //    return View("CourseDetails", viewModel);
+        //}
+
         public IActionResult Index()
         {
-
             return View();
         }
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
     }
 }

@@ -1,25 +1,57 @@
 ﻿using DSTutorials1909.Data;
 using DSTutorials1909.Models;
 using DSTutorials1909.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace DSTutorials1909.Controllers
 {
+    
+
     public class CourseController : Controller
     {
         private readonly ApplicationDbContext _db;
+
         public CourseController(ApplicationDbContext db)
         {
             _db = db;
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var course = _db.Courses.ToList();
             return View(course);
         }
+        //[Authorize(Roles ="Admin,User")]
+        [HttpGet]
+        public IActionResult Search(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return Json(new { success = false, message = "Please enter a search term." });
+            }
+
+            var course = _db.Courses
+                                 .FirstOrDefault(c => c.CourseName.Contains(keyword));
+
+            if (course != null)
+            {
+                return Json(new { success = true, courseId = course.CoursesId, courseName = course.CourseName });
+            }
+            else
+            {
+                return Json(new { success = false, message = "No result found." });
+            }
+        }
 
 
+
+
+
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             CourseViewModel courseViewModel = new CourseViewModel()
@@ -29,6 +61,7 @@ namespace DSTutorials1909.Controllers
 
             return View(courseViewModel);
         }
+
         [HttpPost]
         public IActionResult Create(CourseViewModel course, IFormFile CourseImage)
         {
@@ -48,7 +81,7 @@ namespace DSTutorials1909.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var course = _db.Courses.Find(id);
@@ -59,6 +92,7 @@ namespace DSTutorials1909.Controllers
             };
             return View(cr);
         }
+
         [HttpPost]
         public IActionResult Edit(CourseViewModel course, IFormFile CourseImage)
         {
@@ -86,15 +120,13 @@ namespace DSTutorials1909.Controllers
             else
             {
                 course.Courses.CourseImage = cr.CourseImage;
-
             }
 
             _db.Courses.Update(course.Courses);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var course = _db.Courses.Find(id);
@@ -104,11 +136,10 @@ namespace DSTutorials1909.Controllers
                 Courses = course
             };
             return View(cr);
-
         }
 
         [HttpPost]
-        public IActionResult Delete(CourseViewModel course, IFormFile CourseImage)
+        public IActionResult Delete(CourseViewModel course)
         {
             var cr = _db.Courses.AsNoTracking().FirstOrDefault(i => i.CoursesId == course.Courses.CoursesId);
             if (!string.IsNullOrEmpty(cr.CourseImage))
@@ -125,16 +156,12 @@ namespace DSTutorials1909.Controllers
             return RedirectToAction("Index");
         }
 
-
         #region API CALLS
         public IActionResult GetAll()
         {
-            var coursse = _db.Courses.ToList();
-            return Json(new { data = coursse });
+            var courses = _db.Courses.ToList();
+            return Json(new { data = courses });
         }
         #endregion
-
-
-
     }
 }

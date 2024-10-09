@@ -1,12 +1,21 @@
 ﻿@model DSTutorials1909.ViewModel.CourseViewModel
 
-<div class="navigation-buttons" style="text-align: center; margin: 20px 0;">
-    @if (Model.PreviousSubMenu != null)
+<div class="d-flex justify-content-between mt-3 mb-4">
+    @if (string.IsNullOrEmpty(Model.PrevUrl))
     {
-        <a href="@Url.Action("CourseDetails", "Main", new { menuUrl = Model.Courses.MenuUrl, subMenuUrl = Model.PreviousSubMenu.SubMenuUrl })" class="btn btn-primary">Previous</a>
+        <button disabled class="home btn btn-purple">Previous</button>
     }
-    @if (Model.NextSubMenu != null)
+    else
     {
-        <a href="@Url.Action("CourseDetails", "Main", new { menuUrl = Model.Courses.MenuUrl, subMenuUrl = Model.NextSubMenu.SubMenuUrl })" class="btn btn-primary">Next</a>
+        <a asp-controller="Main" asp-action="CourseDetails" asp-route-courseId="@Model.Courses.CoursesId" asp-route-submenuId="@Model.PrevUrl" class="home btn btn-purple">Previous</a>
+    }
+
+    @if (string.IsNullOrEmpty(Model.NextUrl))
+    {
+        <button disabled class="home btn btn-purple">Next</button>
+    }
+    else
+    {
+        <a asp-controller="Main" asp-action="CourseDetails" asp-route-courseId="@Model.Courses.CoursesId" asp-route-submenuId="@Model.NextUrl" class="next btn btn-purple btn-next">Next</a>
     }
 </div>

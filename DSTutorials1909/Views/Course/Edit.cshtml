@@ -29,7 +29,6 @@
                 </div>
                 <div class="row mt-2 mb-2">
                     <div class="col-2">
-<<<<<<< HEAD
                         <label asp-for="@Model.Courses.MenuUrl" class="form-label"></label>
                     </div>
                     <div class="col-10">
@@ -38,8 +37,6 @@
                 </div>
                 <div class="row mt-2 mb-2">
                     <div class="col-2">
-=======
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                         <label asp-for="@Model.Courses.CourseSequence" class="form-label"></label>
                     </div>
                     <div class="col-10">
@@ -51,7 +48,7 @@
                         <label asp-for="@Model.Courses.CourseImage" class="form-label"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="@Model.CourseImage" class="form-control" />
+                        <input asp-for="@Model.Courses.CourseImage" type="file" class="form-control" />
                     </div>
                 </div>
                 <div class="row mt-2 mb-2">
@@ -62,14 +59,10 @@
                         <a asp-controller="Course" asp-action="Index" class="btn btn-outline-light form-control">Back To List</a>
                     </div>
                 </div>
-
-
             </form>
         </div>
         <div class="col-3 mt-2 mb-2">
-            <img src="@Model.Courses.CourseImage" style="width:50%;height:80%" class="rounded" />
+            <img src="@Model.Courses.CourseImage" style="width:50%;height:auto" class="rounded" alt="Course Image" />
         </div>
     </div>
-
-
 </div>

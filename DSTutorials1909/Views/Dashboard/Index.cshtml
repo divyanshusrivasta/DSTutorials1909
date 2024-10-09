@@ -1,0 +1,397 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-2 mb-5">
+    <div class="mb-3">
+        <h2 class="text-white">
+            Hey there,
+            <span class="text-primary">
+                @ViewBag.UserName.
+            </span>
+        </h2>
+        <p style="color:white;font-size:20px">Welcome back, we're happy to have you here!</p>
+    </div>
+
+    <div class="row mt-4 mb-2">
+        @if (User.IsInRole("Admin")) // Replace "Admin" with the actual role name if different
+        {
+                <div class="col-8 ">
+                    <a class="btn btn-info me-1 ms-1 " asp-controller="Menu" asp-action="Index">Menu</a>
+                    <a class="btn btn-info me-1 ms-1 " asp-controller="Course" asp-action="Index">Course</a>
+                    <a class="btn btn-info me-1 ms-1 " asp-controller="SubMenu" asp-action="Index">SubMenu</a>
+                    <a class="btn btn-info me-1 ms-1 " asp-controller="Content" asp-action="Index">Content</a>
+                </div>
+            <div class="col-4 text-end">
+                <a asp-controller="Question" asp-action="Index" class="btn btn-primary me-1 ms-1 ">Question</a>
+                <a asp-controller="Question" asp-action="ViewSolutions" class="btn btn-success ms-1 me-1 ">Solutions</a>
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-end">
+                <a asp-controller="Question" asp-action="Index" class="btn btn-primary me-1 ms-1 ">Question</a>
+                <a asp-controller="Question" asp-action="ViewSolutions" class="btn btn-success ms-1 me-1 ">Solutions</a>
+            </div>
+
+        }
+    </div>
+
+    @* Check if the user is an admin *@
+   
+
+    <div class="mt-5">
+        <div class="row text-center my-lg-3 my-md-3 my-0 mt-5 d-flex justify-content-center mx-1">
+            <!-- Card 1: Questions Asked -->
+            <div class="mt-5 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.QuestionCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Ask By Me</p>
+            </div>
+
+            <!-- Card 2: Solved Questions -->
+            <div class="mt-5 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.SolvedCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Solved Questions</p>
+            </div>
+
+            <!-- Card 3: Unsolved Questions -->
+            <div class="mt-5 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.UnsolvedCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Unsolved Questions</p>
+            </div>
+
+            <!-- Card 4: Answers Provided -->
+            <div class="mt-4 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.AnswerCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Answers Provided</p>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-lg-6">
+            <canvas id="lineChart"></canvas>
+        </div>
+        <div class="col-lg-6">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .bc {
+        background-color: rgba(104, 104, 211, 0.1); /* Light background for visibility */
+        border: 2px solid purple; /* Simple purple border */
+        border-radius: 10px; /* Adjust border radius as needed */
+    }
+
+    h1 {
+        font-size: 3rem; /* Adjust font size for the main count */
+    }
+
+    p {
+        font-size: 1rem; /* Adjust font size for the description */
+        color: #6868d3; /* Purple color for text */
+    }
+
+    .text-primary {
+        color: #6868d3; /* Purple color for counts */
+    }
+
+    canvas {
+        max-height: 400px; /* Limit the height of the charts */
+        margin-top: 20px; /* Add some space above the charts */
+    }
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Dynamic data from ViewBag
+        const questionCount = @ViewBag.QuestionCount;
+        const solvedCount = @ViewBag.SolvedCount;
+        const unsolvedCount = @ViewBag.UnsolvedCount;
+        const answerCount = @ViewBag.AnswerCount;
+
+        // Data for the charts
+        const labels = ['Questions Asked', 'Solved Questions', 'Unsolved Questions', 'Answers Provided'];
+        const data = [questionCount, solvedCount, unsolvedCount, answerCount];
+
+        // Line Chart
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+
+        const lineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'My Activities by Line chart',
+                    data: data,
+                    borderColor: '#cc7518', // Set line color to yellow
+                    /* backgroundColor: 'rgba(204, 117, 24, 0.2)', */ // Optional: set area below the line
+                    borderWidth: 2,
+                    fill: true,
+                    pointBackgroundColor: '#cc7518', // Set point color to the same yellow
+                    pointBorderColor: '#cc7518', // Set point border color to the same yellow
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+        // const lineChart = new Chart(ctxLine, {
+        //     type: 'line',
+        //     data: {
+        //         labels: labels,
+        //         datasets: [{
+        //             label: 'Count',
+        //             data: data,
+        //             borderColor: 'rgba(104, 68, 211, 1)',
+        //             backgroundColor: 'rgba(104, 68, 211, 0.2)',
+        //             borderWidth: 2,
+        //             fill: true,
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     }
+        // });
+
+        // Bar Chart
+
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'My Activities by Bar chart',
+                    data: data,
+                    backgroundColor: 'hsl(218, 81.8%, 56.9%)', // New bar color
+                    borderColor: 'hsl(218, 81.8%, 56.9%)',
+                    borderWidth: 1,
+                    borderRadius: 10 // Add border radius for rounded bars
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        // Optional: Customization of the tooltip for rounded bars
+                    }
+                }
+            },
+            plugins: [{
+                id: 'roundedBars',
+                beforeDraw: function (chart) {
+                    const ctx = chart.ctx;
+                    const meta = chart.getDatasetMeta(0);
+                    const data = chart.data.datasets[0].data;
+
+                    ctx.save();
+                    ctx.beginPath();
+                    meta.data.forEach(function (bar, index) {
+                        const radius = 10; // Radius for rounded corners
+                        const barWidth = bar.width;
+                        const barHeight = bar.height;
+                        const barX = bar.x - barWidth / 2;
+                        const barY = bar.y;
+
+                        ctx.fillStyle = bar.options.backgroundColor;
+                        ctx.strokeStyle = bar.options.borderColor;
+
+                        // Custom rounded corner drawing
+                        ctx.moveTo(barX + radius, barY);
+                        ctx.arcTo(barX + barWidth, barY, barX + barWidth, barY + barHeight, radius);
+                        ctx.arcTo(barX + barWidth, barY + barHeight, barX, barY + barHeight, radius);
+                        ctx.arcTo(barX, barY + barHeight, barX, barY, radius);
+                        ctx.arcTo(barX, barY, barX + barWidth, barY, radius);
+
+                        ctx.fill();
+                        ctx.stroke();
+                    });
+                    ctx.restore();
+                }
+            }]
+        });
+
+
+
+
+        // const ctxBar = document.getElementById('barChart').getContext('2d');
+        // const barChart = new Chart(ctxBar, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: labels,
+        //         datasets: [{
+        //             label: 'Count',
+        //             data: data,
+        //             backgroundColor: 'rgba(104, 68, 211, 1)',
+        //             borderColor: 'rgba(104, 68, 211, 1)',
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     }
+        // });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-2 mb-5">
+    <div class="mb-3">
+        <h2 class="text-white">
+            Hey there,
+            <span class="text-primary">
+                @ViewBag.UserName.
+
+            </span>
+        </h2>
+        <p style="color:white;font-size:20px">Welcome back, we're happy to have you here!</p>
+    </div>
+    
+    <div class="row mt-2 mb-2 text-end">
+        <div class="col-12 text-end">
+            <a asp-controller="Question" asp-action="Index" class="btn btn-primary me-1 ms-1 ">Question</a>
+            <a asp-controller="Question" asp-action="ViewSolutions" class="btn btn-success ms-1 me-1 ">Solutions</a>
+        </div>
+        
+    </div>
+
+
+    <div class="mt-5">
+        <div class="row text-center my-lg-3 my-md-3 my-0 mt-5 d-flex justify-content-center mx-1">
+            <!-- Card 1: Questions Asked -->
+            <div class="mt-5 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.QuestionCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Ask By Me</p>
+            </div>
+
+            <!-- Card 2: Solved Questions -->
+            <div class="mt-5 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.SolvedCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Solved Questions</p>
+            </div>
+
+            <!-- Card 3: Unsolved Questions -->
+            <div class="mt-5 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.UnsolvedCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Unsolved Questions</p>
+            </div>
+
+            <!-- Card 4: Answers Provided -->
+            <div class="mt-4 rounded p-3 pt-4 col-lg-3 col-md-3 col-12 mx-lg-3 mx-md-3 m-2 bc">
+                <h1 class="fw-bold fs-1 text-white">@ViewBag.AnswerCount</h1>
+                <p class="text-purple-light-dark" style="font-size:18px">Answers Provided</p>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<style>
+    .bc {
+        background-color: rgba(104, 104, 211, 0.1); /* Light background for visibility */
+        border: 2px solid purple; /* Simple purple border */
+        border-radius: 10px; /* Adjust border radius as needed */
+    }
+
+    h1 {
+        font-size: 3rem; /* Adjust font size for the main count */
+    }
+
+    p {
+        font-size: 1rem; /* Adjust font size for the description */
+        color: #6868d3; /* Purple color for text */
+    }
+
+    .text-primary {
+        color: #6868d3; /* Purple color for counts */
+    }
+</style>
+
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DSTutorials1909</title>
-<<<<<<< HEAD
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -23,8 +22,371 @@
     <!-- Prism.js Toolbar CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
 
-    <!-- Optional Custom Styles -->
-=======
+    <link rel="stylesheet" href="~/DSTutorials1909.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <style>
+        /* CSS to make the navbars fixed at the top */
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure it stays above other content */
+            background-color: darkorchid; /* Adjust this color as needed */
+        }
+
+        .custom-navbar {
+            position: fixed;
+            top: 56px; /* Adjust based on the height of the main navbar */
+            left: 0;
+            width: 100%;
+            z-index: 999; /* Ensure it stays below the main navbar */
+            background-color: #f8f9fa; /* Light background color for custom navbar */
+            overflow-x: auto; /* Allow horizontal scrolling */
+        }
+
+        body {
+            padding-top: 120px; /* Adjust this value based on the combined height of your navbars */
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+            .navbar-nav .nav-item {
+                flex: 0 0 auto;
+                margin-right: 10px;
+            }
+
+        .nav-link {
+            color: white;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+            .nav-link:hover {
+                background-color: grey;
+            }
+
+        /* Optional Debugging Styles for Prism Code Blocks */
+        pre[class*="language-"] {
+            background-color: #272822 !important; /* Okida theme background */
+            color: #f8f8f2 !important; /* Okida theme text color */
+            padding: 1em;
+            border-radius: 8px;
+            overflow: auto;
+        }
+
+
+
+
+        #searchForm {
+            margin-bottom: 0;
+        }
+
+        #searchResult {
+            margin-top: 10px; /* Adjusts the space between the search button and the result */
+        
+        }
+
+
+
+
+         #toggleContent {
+            display: none; /* Initially hidden */
+            margin-top: 10px; /* Space below the navbar */
+        }
+
+
+
+        .bi-search-heart {
+            font-size: 1.2rem; /* Adjust the size as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body fixed-navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" style="color:white" asp-controller="Home" asp-action="Index"><i class="bi bi-gear-wide-connected"></i> DSTutorials</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse text-end align-items-end" id="navbarColor02">
+                    <ul class="navbar-nav me-auto text-end align-items-end justify-content-end">
+                    </ul>
+                    <!-- Conditionally display the menu items for Admin -->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="QuestionList">Question</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="SolutionList">Solution</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("User"))
+                    {
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="QuestionList">Question</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="SolutionList">Solution</a>
+                        </li>
+
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="Tutorials">Tutorials</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="QuestionList">Question</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="SolutionList">Solution</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                        </li>
+                        
+                    }
+
+
+
+                            <button id="toggleButton" class="btn btn-outline-dark me-1 ms-2"><i class="bi bi-search-heart"></i></button>
+                            <div id="toggleContent">
+                                <form id="searchForm" class="d-flex">
+                                    <input class="form-control me-sm-2" type="search" id="searchInput" placeholder="Search" />
+                                    <button class="btn btn-info my-sm-0 btn-sm me-1" type="button" id="searchButton">Search</button>
+                                </form> 
+                            </div>
+                             
+
+
+
+
+
+
+
+                    @* <form id="searchForm" class="d-flex">
+                        <input class="form-control me-sm-2" type="search" id="searchInput" placeholder="Search" />
+                        <button class="btn btn-info my-sm-0 btn-sm me-2" type="button" id="searchButton">Search</button>
+                    </form> *@
+
+                    <!-- Result div will be below the search input and button -->
+                    <div id="searchResult" class="mt-2 ms-2"></div>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="ms-2 d-flex align-items-center">
+                            <div class="me-2">
+                                <a style="color:white;" asp-area="Identity" asp-page="/Account/Manage/Index">Hello, @User.Identity.Name!</a>
+                            </div>
+                            <div>
+                                <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+                                    <button type="submit" class="btn btn-light ms-2 btn-sm">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <li class="ms-2 d-flex">
+                            <a class="btn btn-primary ms-1 mt-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                        <li class="ms-2 d-flex">
+                            <a class="btn btn-primary ms-2 mt-2" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </li>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+    <div>
+        @await Component.InvokeAsync("TutorialMenu")
+    </div>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            Copyright &copy; 2024 - DSTutorials.com <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy And Cookies Policy</a>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- Prism.js -->
+    <script src="https://unpkg.com/prismjs/prism.js"></script>
+
+    <!-- Prism.js Plugins -->
+    <script src="https://unpkg.com/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://unpkg.com/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="https://unpkg.com/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="//cdn.datatables.net/2.1.6/js/dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+        // Toggle the visibility of the hidden content when the button is clicked
+        $('#toggleButton').click(function(event) {
+            event.stopPropagation(); // Prevent the click event from bubbling up
+            $('#toggleContent').toggle(); // Toggle the hidden content
+        });
+
+        // Hide the content if the user clicks anywhere outside of it
+        $(document).click(function(event) {
+            if (!$(event.target).closest('#toggleButton').length && !$(event.target).closest('#toggleContent').length) {
+                $('#toggleContent').hide(); // Hide the content
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            $('#searchButton').on('click', function () {
+                var keyword = $('#searchInput').val().trim();
+
+                if (keyword === "") {
+                    $('#searchResult').html('<span class="text-danger">Please enter a search term.</span>');
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Search", "Course")',
+                    type: 'GET',
+                    data: { keyword: keyword },
+                    success: function (response) {
+                        if (response.success) {
+                            var courseUrl = response.courseName.toLowerCase().replace(/ /g, '-');
+                            $('#searchResult').html(
+                                `<a href="/Main/CourseDetails?menuUrl=${courseUrl}" class="btn btn-outline-warning btn-sm mt-2">Go to ${response.courseName}</a>`
+                            );
+                        } else {
+                            $('#searchResult').html(`<span class="text-danger">${response.message}</span>`);
+                        }
+                    },
+                    error: function () {
+                        $('#searchResult').html('<span class="text-danger">An error occurred while searching.</span>');
+                    }
+                });
+            });
+        });
+
+
+
+
+//         document.getElementById("searchToggleButton").addEventListener("click", function () {
+//     var searchForm = document.getElementById("searchForm");
+    
+//     // Toggle the 'show' class to expand/collapse the search bar
+//     if (searchForm.classList.contains("show")) {
+//         searchForm.classList.remove("show"); // Collapse
+//     } else {
+//         searchForm.classList.add("show"); // Expand
+//         // Optionally, focus on the input when it expands
+//         document.getElementById("searchInput").focus();
+//     }
+// });
+
+
+
+
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Add this line before the closing body tag -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+
+</body>
+</html>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DSTutorials1909</title>
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/css/custom.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -32,11 +394,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.css" />
 
-@*     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-okaidia.min.css" />
- *@    
-
-
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
     <link rel="stylesheet" href="~/DSTutorials1909.styles.css" asp-append-version="true" />
 
     <style>
@@ -87,7 +444,6 @@
             .nav-link:hover {
                 background-color: black;
             }
-<<<<<<< HEAD
 
         /* Optional Debugging Styles for Prism Code Blocks */
         pre[class*="language-"] {
@@ -98,12 +454,6 @@
             overflow: auto;
         }
     </style>
-
-=======
-    </style>
-
-
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 </head>
 
 <body>
@@ -137,21 +487,6 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Content" asp-action="Index">Content</a>
                         </li>
-<<<<<<< HEAD
-=======
-                       
-                        
-                        @*  <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                        </li> *@
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                     </ul>
                     <li class="d-flex">
                         <a class="nav-link" asp-controller="Content" asp-action="Contact">Contact</a>
@@ -162,7 +497,6 @@
                     </form>
                 </div>
             </div>
-<<<<<<< HEAD
         </nav>
     </header>
 
@@ -170,17 +504,6 @@
         @await Component.InvokeAsync("TutorialMenu")
     </div>
     <div class="container-fluid">
-=======
-
-        </nav>
-
-
-    </header>
-    <div>
-        @await Component.InvokeAsync("TutorialMenu")
-    </div>
-    <div class="container">
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -191,40 +514,15 @@
             Copyright &copy; 2024 - DSTutorials.com <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy And Cookies Policy</a>
         </div>
     </footer>
-<<<<<<< HEAD
 
     <!-- jQuery -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-    <script src="https://unpkg.com/prismjs/prism.js"></script>
-
-    <!-- Prism.js Plugins -->
-    <script src="https://unpkg.com/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-    <script src="https://unpkg.com/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-    <script src="https://unpkg.com/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
-
-    <!-- DataTables JS -->
-    <script src="//cdn.datatables.net/2.1.6/js/dataTables.min.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    
-=======
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.js"></script>
     <script src="//cdn.datatables.net/2.1.6/js/dataTables.min.js" asp-append-version="true"></script>
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<<<<<<< HEAD
-
-
-
-
-
-
-=======
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
+ *@

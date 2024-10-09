@@ -1,0 +1,210 @@
+﻿@model DSTutorials1909.ViewModel.CourseViewModel
+
+<div class="container mt-4">
+    <div style="display: flex; align-items: center; margin-top: 10px; margin-bottom: 10px;">
+        <img src="~/Images/question-heart.png" style="width:60px; height:60px; margin-right: 5px;" />
+        <div>
+            <h2 style="margin: 0;color:white;">@Model.Question.QName</h2>
+        </div>
+    </div>
+    <div>
+        <h6 style="margin: 0;color:white">@Html.Raw(Model.Question.QDescription)</h6>
+    </div>
+
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <img src="~/Images/man-removebg-preview.png" style="width:35px;height:35px" />
+            <p class="mb-0 ms-1 me-1" style="color:green"><strong>@Model.Question.Author</strong></p>
+        </div>
+        <div class="d-flex justify-content-end">
+            <p class="mb-0" style="color:white;"><strong>Asked:</strong> @Model.Question.CreatedDate?.ToString("g")</p>
+        </div>
+    </div>
+
+    <h3 style="color:white">Answers </h3>
+    <div>
+        @if (Model.SolutionsList != null && Model.SolutionsList.Any())
+        {
+            <ul class="list-group">
+                @foreach (var solution in Model.SolutionsList)
+                {
+                    <li class="list-group-item">
+                        <p>@Html.Raw(solution.SName)</p>
+                    </li>
+                    <div class="d-flex justify-content-end">
+                        <img src="~/Images/user-removebg-preview.png" style="width:35px;height:35px" />
+                        <p class="mb-0 ms-1 me-1" style="color:green"><strong>@solution.SAuthor</strong></p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <p class="mb-0" style="color:white;"><strong>Answered:</strong> @solution.CreatedDate?.ToString("g")</p>
+                    </div>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No solutions available for this question.
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <h3 class="text-primary mb-4 mt-3">Add Your Answer</h3>
+        <button class="btn btn-primary mt-2" id="addAnswerButton"><i class="bi bi-plus-circle"></i> Add New</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('addAnswerButton').onclick = function () {
+        var isAuthenticated = '@User.Identity.IsAuthenticated'; // Use Razor to check authentication status
+        if (isAuthenticated === 'True') {
+            window.location.href = '@Url.Action("CreateSolution", "Question", new { qid = Model.Question.QId })';
+        } else {
+            toastr.error('Please log in to add your answer.'); // Display toast notification
+        }
+    };
+</script>
+
+
+
+
+@* @model DSTutorials1909.ViewModel.CourseViewModel
+
+<div class="container mt-4">
+  
+
+
+    <div style="display: flex; align-items: center; margin-top: 10px; margin-bottom: 10px;">
+        <img src="~/Images/question-heart.png" style="width:60px; height:60px; margin-right: 5px;" /> <!-- Adjust right margin as needed -->
+        <div>
+            <h2  style="margin: 0;color:white;">@Model.Question.QName</h2> <!-- Remove margin -->
+        </div>
+    </div>
+    <div >
+        <h6 style="margin: 0;color:white">@Html.Raw(Model.Question.QDescription)</h6> <!-- Remove margin -->
+
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <img src="~/Images/man-removebg-preview.png" style="width:35px;height:35px" />
+            <p class="mb-0 ms-1 me-1" style="color:green"><strong>@Model.Question.Author</strong></p>
+        </div>
+        <div class="d-flex justify-content-end">
+            <p class="mb-0" style="color:white;"><strong>Asked:</strong> @Model.Question.CreatedDate?.ToString("g")</p>
+        </div>
+    </div>
+
+
+    <h3 style="color:white">Answers </h3>
+    <div >
+        @if (Model.SolutionsList != null && Model.SolutionsList.Any())
+        {
+            <ul class="list-group">
+                @foreach (var solution in Model.SolutionsList)
+                {
+                    <li class="list-group-item">
+                        <p>@Html.Raw(solution.SName)</p>
+                       
+                    </li>
+                    <div class="d-flex justify-content-end">
+                        <img src="~/Images/user-removebg-preview.png" style="width:35px;height:35px" />
+                        <p class="mb-0 ms-1 me-1" style="color:green"><strong>@solution.SAuthor</strong></p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <p class="mb-0" style="color:white;"><strong>Answered:</strong> @solution.CreatedDate?.ToString("g")</p>
+                    </div>
+
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No solutions available for this question.
+            </div>
+        }
+
+    </div>
+
+    <div class="mt-4">
+        <h3 class="text-primary mb-4 mt-3">Add Your Answer</h3>
+        <a asp-controller="Question" asp-action="CreateSolution" asp-route-qid="@Model.Question.QId" class="btn btn-primary mt-2"><i class="bi bi-plus-circle"></i> Add New</a>
+    </div>
+</div>
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model DSTutorials1909.ViewModel.CourseViewModel
+
+<div class="container">
+    <h2>@Model.Question.QName</h2>
+    <p><strong></strong> @Model.Question.QDescription</p>
+    <p><strong>Author:</strong> @Model.Question.Author</p>
+    <p><strong>Created Date:</strong> @Model.Question.CreatedDate?.ToString("g")</p>
+
+    <h3>Solutions</h3>
+    @if (Model.SolutionsList != null && Model.SolutionsList.Any())
+    {
+        <ul>
+            @foreach (var solution in Model.SolutionsList)
+            {
+                <li>
+                    <strong>@solution.SAuthor:</strong>
+                    <br />
+                    @solution.SName
+                    <br />
+                    <small>Created on: @solution.CreatedDate?.ToString("g")</small>
+                    <br />
+                    <small>Modified on: @solution.ModifiedDate?.ToString("g")</small>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No solutions available for this question.</p>
+    }
+
+    <a asp-controller="Question" asp-action="CreateSolution" asp-route-qid="@Model.Question.QId" class="btn btn-primary">Add Solution</a>
+    <a asp-controller="Question" asp-action="Index" class="btn btn-secondary">Back to Questions</a>
+</div>
+ *@

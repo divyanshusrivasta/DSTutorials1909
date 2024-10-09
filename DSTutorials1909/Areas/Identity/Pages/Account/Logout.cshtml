@@ -1,0 +1,95 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+            </form>
+        }
+        else
+        {
+            <p>You have successfully logged out of the application.</p>
+            <p>Redirecting you to the home page...</p>
+        }
+    }
+</header>
+
+<script>
+    // Redirect after 2 seconds
+    setTimeout(function () {
+        window.location.href = '@Url.Page("/", new { area = "" })'; // Redirect to home page
+    }, 1500); // Change 2000 to 3000 for 3 seconds if needed
+</script>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+        @if (TempData["LogoutSuccess"] != null)
+        {
+            <text>
+                        toastr.info('@TempData["LogoutSuccess"]');
+            </text>
+        }
+                });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+            </form>
+        }
+        else
+        {
+            <p>You have successfully logged out of the application.</p>
+            <p>Redirecting you to the home page...</p>
+        }
+    }
+</header>
+
+<script>
+    // Redirect after 2 seconds
+    setTimeout(function () {
+        window.location.href = '@Url.Page("/", new { area = "" })'; // Redirect to home page
+    }, 2500); // Change 2000 to 3000 for 3 seconds if needed
+</script>
+ *@

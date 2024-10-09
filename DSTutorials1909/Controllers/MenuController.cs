@@ -1,11 +1,13 @@
 ﻿using DSTutorials1909.Data;
 using DSTutorials1909.Models;
 using DSTutorials1909.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DSTutorials1909.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class MenuController : Controller
     {
         private readonly ApplicationDbContext _db;

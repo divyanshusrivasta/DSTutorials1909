@@ -1,0 +1,294 @@
+﻿@model IEnumerable<DSTutorials1909.Models.Question>
+
+@{
+    ViewData["Title"] = "Questions";
+}
+
+<div class="row mt-3 mb-2">
+    <div class="col-6">
+        <h1 class="text-primary">Questions</h1>
+    </div>
+</div>
+<div class="row mt-2 mb-5">
+    <div class="col-3">
+        <a asp-controller="Question" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add Your Question
+        </a>
+    </div>
+</div>
+
+<table id="tblque" class="display table table-bordered table-striped me-4 ms-2 mt-5">
+    <thead>
+        <tr>
+            <th class="question-column">Question</th> <!-- Increased width for Question column -->
+            <th class="text-end action-column"></th> <!-- Reduced width for Actions column -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- DataTable will populate the rows via AJAX -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblque').DataTable({
+                "ajax": { url: "/Question/GetAll" },  // Adjust the route if necessary
+                "columns": [
+                    {
+                        "data": "qName", // Assuming 'qName' is the property for the question's name
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.qId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    },
+                    {
+                        "data": null,
+                        "className": "text-end",
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/CreateSolution?qid=' + row.qId + '" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>' +
+                                   '<a href="/Question/Edit?qid=' + row.qId + '" class="btn btn-success ms-1"><i class="bi bi-pencil-square"></i></a>' +
+                                   '<a href="/Question/Delete?qid=' + row.qId + '" class="btn btn-danger ms-1"><i class="bi bi-trash3"></i></a>';
+                        }
+                    }
+                ],
+                "autoWidth": false, // Disable auto width to respect custom widths
+                "columnDefs": [
+                    { "width": "80%", "targets": 0 }, // Set the width for the Question column
+                    { "width": "20%", "targets": 1 }  // Set the width for the Actions column
+                ]
+            });
+        });
+    </script>
+    <style>
+        .custom-inline-link {
+            text-decoration: none;
+            color: white; /* Initial white color */
+        }
+
+        .custom-inline-link:hover {
+            color: blue !important; /* Change to blue on hover */
+            text-decoration: none; /* Ensure no underline on hover */
+        }
+
+        /* Enforce column widths */
+        .question-column {
+            width: 80% !important; /* Increased width for Question column */
+        }
+
+        .action-column {
+            width: 20% !important; /* Reduced width for Actions column */
+        }
+
+        /* Optional: prevent text wrapping in question column */
+        .question-column {
+            white-space: nowrap; /* Prevents text wrapping */
+            overflow: hidden; /* Hides overflow text */
+            text-overflow: ellipsis; /* Adds ellipsis for overflow text */
+        }
+    </style>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<DSTutorials1909.Models.Question>
+
+@{
+    ViewData["Title"] = "Questions";
+}
+
+<div class="row mt-3 mb-2">
+    <div class="col-6">
+        <h1 class="text-primary">Questions</h1>
+    </div>
+</div>
+<div class="row mt-2 mb-5">
+    <div class="col-3">
+        <a asp-controller="Question" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add Your Question
+        </a>
+    </div>
+</div>
+
+<table id="tblque" class="display table table-bordered table-striped me-4 ms-2 mt-5">
+    <thead>
+        <tr>
+            <th style="width: 80%;">Question</th> <!-- Increased width for Question column -->
+            <th style="width: 20%;" class="text-end"></th> <!-- Reduced width for Actions column -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- DataTable will populate the rows via AJAX -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblque').DataTable({
+                "ajax": { url: "/Question/GetAll" },  // Adjust the route if necessary
+                "columns": [
+                    {
+                        "data": "qName", // Assuming 'qName' is the property for the question's name
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.qId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    },
+                    {
+                        "data": null,
+                        "className": "text-end",
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/CreateSolution?qid=' + row.qId + '" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>' +
+                                '<a href="/Question/Edit?qid=' + row.qId + '" class="btn btn-success ms-1"><i class="bi bi-pencil-square"></i></a>' +
+                                '<a href="/Question/Delete?qid=' + row.qId + '" class="btn btn-danger ms-1"><i class="bi bi-trash3"></i></a>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <style>
+        .custom-inline-link {
+            text-decoration: none;
+            color: white; /* Initial white color */
+        }
+
+            .custom-inline-link:hover {
+                color: blue !important; /* Change to blue on hover */
+                text-decoration: none; /* Ensure no underline on hover */
+            }
+    </style>
+}
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model List<Question>
+
+<div class="div">
+    <div class="row mt-3 mb-3">
+        <div class="col-6">
+            <h2 class="text-primary">Questions</h2>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+        <div class="col-3">
+            <a asp-controller="Question" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Ask
+            </a>
+        </div>
+    </div>
+
+    <table id="tblque" class="table table-bordered table-striped me-4 ms-2">
+        <thead>
+            <tr>
+                <td>Question</td>
+                <td class="text-end"></td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var i in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Question" asp-action="Details" asp-route-qid="@i.QId"
+                               style="text-decoration: none; color: white;"
+                               class="custom-inline-link">
+                                @i.QName
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            <a asp-controller="Question" asp-action="CreateSolution" asp-route-qid="@i.QId"
+                               class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i>
+                            </a>
+                            <a asp-controller="Question" asp-action="Edit" asp-route-qid="@i.QId"
+                               class="btn btn-success">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-controller="Question" asp-action="Delete" asp-route-qid="@i.QId"
+                               class="btn btn-danger">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" align="center">No Questions Posted Yet !!</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .custom-inline-link {
+        text-decoration: none;
+        color: white; /* Initial white color */
+    }
+
+        .custom-inline-link:hover {
+            color: blue !important; /* Change to blue on hover */
+            text-decoration: none; /* Ensure no underline on hover */
+        }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ *@

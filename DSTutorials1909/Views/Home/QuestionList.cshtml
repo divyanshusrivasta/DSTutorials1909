@@ -1,0 +1,236 @@
+﻿@model IEnumerable<DSTutorials1909.Models.Question>
+
+@{
+    ViewData["Title"] = "Questions";
+}
+
+<div class="row mt-3 mb-2">
+    <div class="col-6">
+        <h1 class="text-primary">Ask Your Question</h1>
+    </div>
+</div>
+<div class="row mt-2 mb-5">
+    <div class="col-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Question" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Ask
+            </a>
+        }
+        else
+        {
+            <button type="button" class="btn btn-primary" onclick="showLoginToast()">
+                <i class="bi bi-plus-circle"></i> Ask
+            </button>
+        }
+    </div>
+</div>
+
+<div class="mt-4 mb-4">
+    <h2 class="text-primary">Unsolved questions list</h2>
+    <h4 class="text-white">If you know the answer of any of the questions, then add your answer.</h4>
+</div>
+
+<table id="tblque" class="display table table-bordered table-striped me-4 ms-2 mt-1">
+    <thead>
+        <tr>
+            <th class="question-column">Question</th>
+            <th class="text-end action-column"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- DataTable will populate the rows via AJAX -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblque').DataTable({
+                "ajax": { url: "/Home/GetAll" },
+                "columns": [
+                    {
+                        "data": "qName",
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.qId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    },
+                    {
+                        "data": null,
+                        "className": "text-end",
+                        "render": function (data, type, row) {
+                            // Razor will output 'true' or 'false' as a string
+                            var isLoggedIn = '@(User.Identity.IsAuthenticated ? "true" : "false")';
+
+                            // If user is logged in, allow adding solutions, otherwise show login prompt
+                            if (isLoggedIn === 'true') {
+                                return '<a href="/Question/CreateSolution?qid=' + row.qId + '" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>';
+                            } else {
+                                return '<button type="button" class="btn btn-primary" onclick="showLoginToast()"><i class="bi bi-plus-circle"></i></button>';
+                            }
+                        }
+                    }
+                ],
+                "autoWidth": false,
+                "columnDefs": [
+                    { "width": "80%", "targets": 0 },
+                    { "width": "20%", "targets": 1 }
+                ]
+            });
+        });
+
+        function showLoginToast() {
+            toastr.error('You need to be Logged in to ask a question');
+        }
+    </script>
+
+    <style>
+        .custom-inline-link {
+            text-decoration: none;
+            color: white;
+        }
+
+            .custom-inline-link:hover {
+                color: blue !important;
+                text-decoration: none;
+            }
+
+        .question-column {
+            width: 80% !important;
+        }
+
+        .action-column {
+            width: 20% !important;
+        }
+
+        .question-column {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<DSTutorials1909.Models.Question>
+
+@{
+    ViewData["Title"] = "Questions";
+}
+
+<div class="row mt-3 mb-2">
+    <div class="col-6">
+        <h1 class="text-primary">Ask Your Question</h1>
+    </div>
+</div>
+<div class="row mt-2 mb-5">
+    <div class="col-3">
+        <a asp-controller="Question" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Ask
+        </a>
+    </div>
+</div>
+
+<div class="mt-4 mb-4">
+    <h2 class="text-primary">Unsolved questions list</h2>
+    <h4 class="text-white">If you know the answer of the any of the questions then add your answer.</h4>
+</div>
+
+<table id="tblque" class="display table table-bordered table-striped me-4 ms-2 mt-1">
+    <thead>
+        <tr>
+            <th class="question-column">Question</th> <!-- Increased width for Question column -->
+            <th class="text-end action-column"></th> <!-- Reduced width for Actions column -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- DataTable will populate the rows via AJAX -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblque').DataTable({
+                "ajax": { url: "/Home/GetAll" },  // Adjust the route if necessary
+                "columns": [
+                    {
+                        "data": "qName", // Assuming 'qName' is the property for the question's name
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/Details?qid=' + row.qId + '" style="text-decoration: none; color: white;" class="custom-inline-link">' + data + '</a>';
+                        }
+                    },
+                    {
+                        "data": null,
+                        "className": "text-end",
+                        "render": function (data, type, row) {
+                            return '<a href="/Question/CreateSolution?qid=' + row.qId + '" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>' ;
+                        }
+                    }
+                ],
+                "autoWidth": false, // Disable auto width to respect custom widths
+                "columnDefs": [
+                    { "width": "80%", "targets": 0 }, // Set the width for the Question column
+                    { "width": "20%", "targets": 1 }  // Set the width for the Actions column
+                ]
+            });
+        });
+    </script>
+    <style>
+        .custom-inline-link {
+            text-decoration: none;
+            color: white; /* Initial white color */
+        }
+
+        .custom-inline-link:hover {
+            color: blue !important; /* Change to blue on hover */
+            text-decoration: none; /* Ensure no underline on hover */
+        }
+
+        /* Enforce column widths */
+        .question-column {
+            width: 80% !important; /* Increased width for Question column */
+        }
+
+        .action-column {
+            width: 20% !important; /* Reduced width for Actions column */
+        }
+
+        /* Optional: prevent text wrapping in question column */
+        .question-column {
+            white-space: nowrap; /* Prevents text wrapping */
+            overflow: hidden; /* Hides overflow text */
+            text-overflow: ellipsis; /* Adds ellipsis for overflow text */
+        }
+    </style>
+}
+ *@

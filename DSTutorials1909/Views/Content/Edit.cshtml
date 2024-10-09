@@ -1,33 +1,19 @@
 ﻿@model DSTutorials1909.ViewModel.CourseViewModel
 
-<<<<<<< HEAD
 <div class="container">
     <div class="row mt-3 mb-2">
-=======
-
-<div class="container">
-    <div class="row mt-3mb-2">
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         <div class="col-8">
             <h2 class="text-primary">Edit Content</h2>
         </div>
     </div>
     <form method="post">
         <input asp-for="@Model.Content.ContentId" hidden />
-<<<<<<< HEAD
-
-=======
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         <div class="row mt-2 mb-2">
             <div class="col-2">
                 <label asp-for="@Model.Content.CourseId" class="form-label"></label>
             </div>
             <div class="col-10">
-<<<<<<< HEAD
                 <select id="ddlcourse" asp-for="@Model.Content.CourseId" asp-items="@(new SelectList(Model.CourseList, "CoursesId", "CourseName"))" class="form-select" onchange="ShowMenu()">
-=======
-                <select id="ddlcourse" asp-for="@Model.Content.CourseId" asp-items="@(new SelectList(Model.CourseList,"CoursesId","CourseName"))" class="form-select" onchange="ShowMenu()">
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                     <option selected disabled value="">--SELECT COURSE--</option>
                 </select>
             </div>
@@ -54,7 +40,6 @@
                 </select>
             </div>
         </div>
-<<<<<<< HEAD
 
         <div class="row mt-2 mb-2">
             <div class="col-2">
@@ -66,27 +51,15 @@
             </div>
         </div>
 
-=======
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         <div class="row mt-2 mb-2">
             <div class="col-2">
                 <label asp-for="@Model.Content.ContentDetail" class="form-label"></label>
             </div>
             <div class="col-10">
-<<<<<<< HEAD
-                <textarea id="myEditor" asp-for="@Model.Content.ContentDetail" class="form-control" rows="5">@Model.Content.ContentDetail</textarea>
-            </div>
-        </div>
-
-=======
                 <textarea id="ContentDetail" name="Content.ContentDetail" class="form-control" rows="5">@Model.Content.ContentDetail</textarea>
-
             </div>
         </div>
 
-
-
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         <div class="row mt-2 mb-2">
             <div class="col-6 col-md-3 mt-3 mb-2">
                 <input type="submit" value="Update" class="btn btn-primary form-control" />
@@ -95,7 +68,6 @@
                 <a asp-controller="Content" asp-action="Index" class="btn btn-outline-light form-control">Back To List</a>
             </div>
         </div>
-<<<<<<< HEAD
     </form>
 </div>
 
@@ -128,7 +100,7 @@
     });
 
     tinymce.init({
-        selector: '#myEditor',
+        selector: '#ContentDetail',
         plugins: 'code codesample lists link image table',
         toolbar: 'undo redo | styles | bold italic underline | fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist | link image | insertCodeSample | codesample',
         menubar: false,
@@ -191,67 +163,6 @@
     });
 
     function ShowMenu() {
-=======
-
-    </form>
-</div>
-
-
-
-
-<script src="https://cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script>
-
-    // CKEDITOR.replace('Content.ContentDetail');
-
-    // CKEDITOR.replace('Content.ContentDetail', {
-    //     extraPlugins: 'justify', // Include the justify plugin
-    //     toolbar: [
-    //         { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
-    //         { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll'] },
-    //         { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
-    //         { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-    //         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
-    //         { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-    //         { name: 'document', items: ['Source'] }
-    //     ]
-    // });
-
-
-
-    $(document).ready(function () {
-
-        CKEDITOR.replace('Content.ContentDetail', {
-            extraPlugins: 'justify',
-            toolbar: [
-                { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
-                { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll'] },
-                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
-                { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
-                { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-                { name: 'document', items: ['Source'] }
-            ]
-        });
-
-
-
-
-        var CourseId = $("#ddlcourse").val();
-        if (CourseId) {
-            ShowMenu();
-
-        }
-
-    });
-
-
-    function ShowMenu() {
-
-
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         $.ajax({
             url: '/Content/MenuShow',
             type: 'GET',
@@ -262,34 +173,18 @@
                 for (var i = 0; i < data.length; i++) {
                     $("#ddlmenu").append($('<option></option>').html(data[i].menuName).val(data[i].menuId));
                 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
                 var selectedMenu = '@Model.Content.MenuId';
                 $('#ddlmenu').val(selectedMenu);
                 ShowSubMenu();
             },
             error: function () {
-<<<<<<< HEAD
                 alert("Some Error Occurred While Fetching the Menus");
             }
         });
     }
 
     function ShowSubMenu() {
-=======
-                alert("Some Error Occured While Fetching the Menus")
-            }
-
-        });
-    }
-
-
-    function ShowSubMenu() {
-
-
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
         $.ajax({
             url: '/Content/SubMenuShow',
             type: 'GET',
@@ -300,7 +195,6 @@
                 for (var i = 0; i < data.length; i++) {
                     $("#ddlsubmenu").append($('<option></option>').html(data[i].subMenuName).val(data[i].subMenuId));
                 }
-<<<<<<< HEAD
                 var selectedSubMenu = '@Model.Content.SubMenuId';
                 $('#ddlsubmenu').val(selectedSubMenu);
                 SetSideSubMenuUrl(selectedSubMenu);
@@ -311,23 +205,3 @@
         });
     }
 </script>
-
-=======
-                var selectedMenu = '@Model.Content.SubMenuId';
-                $('#ddlsubmenu').val(selectedMenu);
-            },
-            error: function () {
-                alert("Some Error Occured While Fetching the SubMenus")
-            }
-
-        });
-    }
-
-
-
-</script>
-
-
-
-
->>>>>>> 03c1add88b450c3c8e635227f66386f4516beae6
